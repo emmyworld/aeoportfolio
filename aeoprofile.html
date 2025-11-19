@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emmanuel Akerele | Web Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+        background-color: #f5f5f5;
+        color: #333;
+        scroll-behavior: smooth;
+    }
+
+    /* Sticky navigation bar */
+    nav {
+        position: sticky;
+        top: 0;
+        background-color: #1a73e8;
+        padding: 0.8rem 1rem;
+        display: flex;
+        justify-content: center;
+        z-index: 1000;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        margin: 0 1rem;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+        color: #34a853;
+    }
+
+    /* Header */
+    header {
+        background: linear-gradient(135deg, #1a73e8, #34a853);
+        color: white;
+        padding: 5rem 1rem 3rem 1rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    header img {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 1rem;
+        border: 3px solid white;
+        transition: transform 0.3s ease, box-shadow 0.4s ease;
+    }
+
+    header img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(255,255,255,0.6);
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 2.8rem;
+        text-shadow: 1px 1px 6px rgba(0,0,0,0.3);
+    }
+
+    header p {
+        margin: 0.5rem 0 1rem;
+        font-size: 1.3rem;
+        text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+    }
+
+    header .project-btn {
+        background-color: #ffffff;
+        color: #1a73e8;
+        font-weight: 600;
+        border-radius: 25px;
+        padding: 10px 25px;
+        text-decoration: none;
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    }
+
+    header .project-btn:hover {
+        background-color: #34a853;
+        color: white;
+        transform: translateY(-3px);
+    }
+
+    /* Floating shapes */
+    .header-shapes span {
+        position: absolute;
+        display: block;
+        width: 25px;
+        height: 25px;
+        background: rgba(255,255,255,0.15);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+    }
+    .header-shapes span:nth-child(1) { left: 10%; top: 20%; animation-duration: 7s; }
+    .header-shapes span:nth-child(2) { left: 30%; top: 10%; animation-duration: 5s; }
+    .header-shapes span:nth-child(3) { left: 50%; top: 25%; animation-duration: 8s; }
+    .header-shapes span:nth-child(4) { left: 70%; top: 15%; animation-duration: 6s; }
+    .header-shapes span:nth-child(5) { left: 85%; top: 30%; animation-duration: 9s; }
+
+    @keyframes float {
+        0% { transform: translateY(0) scale(1);}
+        50% { transform: translateY(-20px) scale(1.1);}
+        100% { transform: translateY(0) scale(1);}
+    }
+
+    /* Header Canvas for bouncing ball */
+    #headerCanvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 500px;
+        z-index: 0;
+    }
+
+    /* Sections */
+    section {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 2rem 1.5rem;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    section.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    h2 {
+        color: #1a73e8;
+        margin-bottom: 1rem;
+        border-bottom: 3px solid #34a853;
+        display: inline-block;
+        padding-bottom: 5px;
+    }
+
+    ul {
+        padding-left: 1.2rem;
+    }
+
+    /* Buttons for projects */
+    .project-btn {
+        display: inline-block;
+        margin: 5px 5px 5px 0;
+        padding: 8px 15px;
+        background-color: #34a853;
+        color: white;
+        font-weight: 600;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .project-btn:hover {
+        background-color: #2c8c46;
+        transform: translateY(-2px);
+    }
+
+    a {
+        color: #1a73e8;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    /* Project cards */
+    .project-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .project-card {
+        flex: 1 1 300px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        background: #fff;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .project-card.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .project-card img {
+        width: 100%;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        object-fit: cover;
+    }
+
+    .project-card h3 {
+        margin: 0 0 0.5rem 0;
+        color: #1a73e8;
+    }
+
+    .project-card p {
+        margin: 0.3rem 0;
+        font-size: 0.95rem;
+    }
+
+    footer {
+        text-align: center;
+        padding: 2rem 1rem;
+        background-color: #1a73e8;
+        color: white;
+        margin-top: 2rem;
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+        header h1 { font-size: 2rem; }
+        header p { font-size: 1rem; }
+        header img { width: 120px; height: 120px; }
+        nav a { margin: 0 0.5rem; font-size: 0.9rem; }
+    }
+</style>
+</head>
+<body>
+
+<!-- Sticky Navigation -->
+<nav>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#skills">Key Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<header>
+    <!-- Canvas for bouncing ball -->
+    <canvas id="headerCanvas"></canvas>
+
+    <!-- Floating shapes -->
+    <div class="header-shapes">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <img src="https://i.ibb.co/m5zm3RP5/pass.jpg" alt="Emmanuel Akerele">
+    <h1>Emmanuel Akerele</h1>
+    <p>Web Developer | Techpreneur | IT Solutions Specialist</p>
+    <a href="#contact" class="project-btn" style="margin-top:15px;">Contact Me</a>
+</header>
+
+<section id="about">
+    <h2>About Me</h2>
+    <p>
+        I am Emmanuel Akerele, a results-driven Web Developer and IT Solutions Specialist with over 12 years of professional experience in web development, digital administration, and technology support. My expertise spans designing and managing modern websites, implementing digital infrastructure, and ensuring seamless online operations for organisations and brands.
+
+        I have served as a Web Manager for reputable institutions, successfully leading end-to-end website projects, managing digital platforms, optimizing performance, and ensuring security and sustainability. My experience includes working with media organisations, corporate entities, and ministry-based institutions.
+
+        I bring a strong blend of technical proficiency, analytical skill, and strategic thinking, enabling me to translate organisational goals into effective digital solutions and helping organisations build, maintain, and scale impactful platforms.
+    </p>
+</section>
+
+<section id="services">
+    <h2>My Professional Focus</h2>
+    <ul>
+        <li>High-quality website development</li>
+        <li>Reliable website management and maintenance</li>
+        <li>Digital strategy and performance optimization</li>
+        <li>UI/UX Design for enhanced engagement</li>
+        <li>IT support, hosting management, and technology solutions</li>
+        <li>AI-powered digital solutions and workflow automation</li>
+        <li>Continuous improvement through innovation and best practices</li>
+    </ul>
+</section>
+
+<section id="skills">
+    <h2>Key Skills & Technologies</h2>
+    <ul>
+        <li><strong>Web Development:</strong> HTML5, CSS3, Bootstrap, JavaScript, PHP, Node.js</li>
+        <li><strong>CMS & Platforms:</strong> WordPress, Custom Development, Shopify, WooCommerce</li>
+        <li><strong>Database:</strong> MySQL, PostgreSQL</li>
+        <li><strong>AI & Automation:</strong> AI-powered digital solutions, workflow automation</li>
+        <li><strong>Front-end Tools & Design:</strong> Figma, Adobe XD, Responsive Design, UI/UX Best Practices</li>
+        <li><strong>Version Control & Collaboration:</strong> Git, GitHub, GitLab, Jira</li>
+        <li><strong>Hosting & Deployment:</strong> cPanel, AWS, DigitalOcean, SEO Optimization</li>
+        <li><strong>Website Management:</strong> Development, Design, Maintenance, Security, Performance Optimization</li>
+        <li><strong>Other Technologies:</strong> APIs Integration, Payment Gateways, E-commerce Platforms</li>
+    </ul>
+</section>
+
+<section id="projects">
+    <h2>Notable Projects I Worked On / Managed</h2>
+    <div class="project-cards">
+        <div class="project-card">
+            <img src="https://i.ibb.co/gMQ2Yd2W/funmiglobal.jpg" alt="Funmil Global Store">
+            <h3>Funmil Global Online Store</h3>
+            <p><strong>Owner:</strong> Funmil Global</p>
+<p> <strong> About: </strong> Funmi Global Online Store (FGonline Store) is a modern eCommerce platform dedicated to showcasing and delivering the rich flavors and authentic foods of Africa to homes around the world. </p>
+            <p><strong>Status:</strong> Ongoing</p>
+            <a href="https://funmilglobalonlinestore.com" target="_blank" class="project-btn">Visit Site</a>
+        </div>
+
+        <div class="project-card">
+            <img src="https://i.ibb.co/qMxnBy5Z/logo192.png" alt="Centre for Pastoral Leadership">
+            <h3>Centre for Pastoral Leadership (CPL)</h3>
+            <p><strong>Owner:</strong> CPL Organization</p>
+<p> <strong> About: </strong> The Centre for Pastoral Leadership (CPL) is a faith-based institution of the Redeemed Christian Church of God (RCCG) committed to equipping pastors, ministers, and church leaders with the spiritual, leadership, and administrative skills required for effective ministry. </p>
+
+            <p><strong>Status:</strong> Developed and delivered</p>
+        </div>
+
+        <div class="project-card">
+            <img src="https://i.ibb.co/99qsg29V/101193717-1481183962052627-4213221320894185472-n.jpg" alt="Redemption Light Publications">
+            <h3>Redemption Light Publications (www.redemptionlight.org)</h3>
+            <p><strong>Owner:</strong> RCCG</p>
+<p> <strong> About: </strong> RCCG official publication website </p>
+
+            <p><strong>Status:</strong> Domain no longer active</p>
+        </div>
+
+        <div class="project-card">
+            <img src="https://i.ibb.co/Qj7MCp0F/clmoi.jpg" alt="CLMOI">
+            <h3>CLMOI (www.clmoi.org)</h3>
+            <p><strong>Owner:</strong> CLMOI Organization</p>
+ <p> <strong> About: </strong> Christian Leadership Mobilization Organization International, also known as Nehemiah Ministry is a
+fellowship of Christians, irrespective of their denominations, ethnicity, gender or social status. </p>
+            <p><strong>Status:</strong> Domain no longer active</p>
+        </div>
+
+        <div class="project-card">
+            <img src="https://i.ibb.co/Txmbcjjc/hf.jpg" alt="RCCG House Fellowship App">
+            <h3>Co-Developed: RCCG House Fellowship App</h3>
+            <p><strong>Owner:</strong> RCCG</p>
+            <p> <strong> About: </strong> The official app of RCCG House Fellowshp </p>
+            <p><strong>Status:</strong> App upgraded</p>
+        </div>
+
+        <div class="project-card">
+            <img src="https://i.ibb.co/wZL3FbD2/eo.jpg" alt="eaodeyemi.org">
+            <h3>eaodeyemi.org</h3>
+            <p><strong>Owner:</strong> Pastor Ezekiel Odeyemi</p>
+<p> <strong> About: </strong> Personal Website of Pastor Ezekiel Odeyemi </p>
+
+            <p><strong>Status:</strong> Developed and delivered(Domain no longer active)</p>
+        </div>
+
+        <div class="project-card">
+            <img src="https://i.ibb.co/nqHPQt5t/BASIC-AGRO-new-logo.jpg" alt="Basic Agro Nig. Ltd">
+            <h3>Basic Agro Nig. Ltd Website</h3>
+            <p><strong>Owner:</strong> Basic Agro Nig. Ltd</p>
+            <p><strong>Status:</strong> Ongoing</p>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:techraft2025@gmail.com">techraft2025@gmail.com</a></p>
+    <p>Phone: +2348032437714</p>
+    <p>LinkedIn: <a href="https://www.linkedin.com/in/emmanuel-akerele" target="_blank">linkedin.com/in/emmanuel-akerele</a></p>
+    <p>Portfolio: <a href="https://yourusername.github.io/portfolio/" target="_blank">View Portfolio</a></p>
+</section>
+
+<footer>
+    &copy; 2025 Emmanuel Akerele | Web Developer
+</footer>
+
+<script>
+// Fade-in animation on scroll
+const faders = document.querySelectorAll('section, .project-card');
+const appearOptions = { threshold: 0.2 };
+
+const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+    entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        appearOnScroll.unobserve(entry.target);
+    });
+}, appearOptions);
+
+faders.forEach(fader => {
+    appearOnScroll.observe(fader);
+});
+
+// Bouncing ball script
+const canvas = document.getElementById('headerCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = 500;
+
+let ball = { x: 50, y: 50, radius: 25, speedX: 4, speedY: 3, color: 'rgba(255,255,255,0.9)' };
+
+function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ball.x += ball.speedX;
+    ball.y += ball.speedY;
+    if(ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) ball.speedX *= -1;
+    if(ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) ball.speedY *= -1;
+    ctx.beginPath();
+    ctx.shadowColor = 'rgba(0,0,0,0.2)';
+    ctx.shadowBlur = 10;
+    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
+    ctx.fillStyle = ball.color;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    requestAnimationFrame(animate);
+}
+animate();
+
+window.addEventListener('resize', ()=>{
+    canvas.width = window.innerWidth;
+    canvas.height = 500;
+});
+</script>
+
+</body>
+</html>
